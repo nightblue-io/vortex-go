@@ -196,6 +196,29 @@
             </ul>
           </li>
         
+          
+          <li>
+            <a href="#iam%2fv1%2fiam.proto">iam/v1/iam.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#vortexproto.iam.v1.WhoAmIRequest"><span class="badge">M</span>WhoAmIRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#vortexproto.iam.v1.WhoAmIResponse"><span class="badge">M</span>WhoAmIResponse</a>
+                </li>
+              
+              
+              
+              
+                <li>
+                  <a href="#vortexproto.iam.v1.Iam"><span class="badge">S</span>Iam</a>
+                </li>
+              
+            </ul>
+          </li>
+        
         <li><a href="#scalar-value-types">Scalar Value Types</a></li>
       </ul>
     </div>
@@ -284,6 +307,112 @@
                 <td>GetInfo</td>
                 <td>GET</td>
                 <td>/vortex/v0/info</td>
+                <td></td>
+              </tr>
+              
+            
+            </tbody>
+          </table>
+          
+        
+    
+      
+      <div class="file-heading">
+        <h2 id="iam/v1/iam.proto">iam/v1/iam.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="vortexproto.iam.v1.WhoAmIRequest">WhoAmIRequest</h3>
+        <p>Request message for the WhoAmI rpc.</p>
+
+        
+
+        
+      
+        <h3 id="vortexproto.iam.v1.WhoAmIResponse">WhoAmIResponse</h3>
+        <p>Request message for the WhoAmI rpc.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+        <h3 id="vortexproto.iam.v1.Iam">Iam</h3>
+        <p>Iam service definition.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>WhoAmI</td>
+                <td><a href="#vortexproto.iam.v1.WhoAmIRequest">WhoAmIRequest</a></td>
+                <td><a href="#vortexproto.iam.v1.WhoAmIResponse">WhoAmIResponse</a></td>
+                <td><p>Testing endpoint.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+
+        
+          
+          
+          <h4>Methods with HTTP bindings</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Method Name</td>
+                <td>Method</td>
+                <td>Pattern</td>
+                <td>Body</td>
+              </tr>
+            </thead>
+            <tbody>
+            
+              
+              
+              <tr>
+                <td>WhoAmI</td>
+                <td>GET</td>
+                <td>/vortex/iam/v0/whoami</td>
                 <td></td>
               </tr>
               
