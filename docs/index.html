@@ -202,6 +202,22 @@
             <ul>
               
                 <li>
+                  <a href="#vortexproto.iam.v1.LoginRequest"><span class="badge">M</span>LoginRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#vortexproto.iam.v1.LoginResponse"><span class="badge">M</span>LoginResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#vortexproto.iam.v1.SignUpRequest"><span class="badge">M</span>SignUpRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#vortexproto.iam.v1.SignUpResponse"><span class="badge">M</span>SignUpResponse</a>
+                </li>
+              
+                <li>
                   <a href="#vortexproto.iam.v1.WhoAmIRequest"><span class="badge">M</span>WhoAmIRequest</a>
                 </li>
               
@@ -323,6 +339,144 @@
       <p></p>
 
       
+        <h3 id="vortexproto.iam.v1.LoginRequest">LoginRequest</h3>
+        <p>Request message for the Login rpc.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="vortexproto.iam.v1.LoginResponse">LoginResponse</h3>
+        <p>Response message for the Login rpc.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="vortexproto.iam.v1.SignUpRequest">SignUpRequest</h3>
+        <p>Request message for the SignUp rpc.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional. The name of the account to register. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Required. The email address of the account to register. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional. A generated password will be provided if empty. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="vortexproto.iam.v1.SignUpResponse">SignUpResponse</h3>
+        <p>Response message for the SignUp rpc.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>id</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>email</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
         <h3 id="vortexproto.iam.v1.WhoAmIRequest">WhoAmIRequest</h3>
         <p>Request message for the WhoAmI rpc.</p>
 
@@ -383,6 +537,20 @@
           <tbody>
             
               <tr>
+                <td>SignUp</td>
+                <td><a href="#vortexproto.iam.v1.SignUpRequest">SignUpRequest</a></td>
+                <td><a href="#vortexproto.iam.v1.SignUpResponse">SignUpResponse</a></td>
+                <td><p>Create an account for the Vortex Platform.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Login</td>
+                <td><a href="#vortexproto.iam.v1.LoginRequest">LoginRequest</a></td>
+                <td><a href="#vortexproto.iam.v1.LoginResponse">LoginResponse</a></td>
+                <td><p>Create an account for the Vortex Platform.</p></td>
+              </tr>
+            
+              <tr>
                 <td>WhoAmI</td>
                 <td><a href="#vortexproto.iam.v1.WhoAmIRequest">WhoAmIRequest</a></td>
                 <td><a href="#vortexproto.iam.v1.WhoAmIResponse">WhoAmIResponse</a></td>
@@ -406,6 +574,26 @@
               </tr>
             </thead>
             <tbody>
+            
+              
+              
+              <tr>
+                <td>SignUp</td>
+                <td>POST</td>
+                <td>/vortex/iam/v0/signup</td>
+                <td>*</td>
+              </tr>
+              
+            
+              
+              
+              <tr>
+                <td>Login</td>
+                <td>POST</td>
+                <td>/vortex/iam/v0/login</td>
+                <td>*</td>
+              </tr>
+              
             
               
               
