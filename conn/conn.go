@@ -3,9 +3,11 @@ package conn
 import (
 	"context"
 	"crypto/tls"
+	"strings"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 )
 
@@ -76,11 +78,16 @@ func New(ctx context.Context, opts ...ClientOption) (*GrpcClientConn, error) {
 	}
 
 	if co.conn == nil {
-		var err error
 		var gopts []grpc.DialOption
-		creds := credentials.NewTLS(&tls.Config{})
-		gopts = append(gopts, grpc.WithTransportCredentials(creds))
-		gopts = append(gopts, grpc.WithPerRPCCredentials(NewRpcCredentials()))
+		if strings.Contains(co.target, "localhost") {
+			gopts = append(gopts, grpc.WithTransportCredentials(insecure.NewCredentials()))
+		} else {
+			creds := credentials.NewTLS(&tls.Config{})
+			gopts = append(gopts, grpc.WithTransportCredentials(creds))
+			gopts = append(gopts, grpc.WithPerRPCCredentials(NewRpcCredentials()))
+		}
+
+		var err error
 
 		if co.svc != "" {
 			gopts = append(gopts, grpc.WithUnaryInterceptor(func(ctx context.Context,

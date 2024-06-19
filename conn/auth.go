@@ -18,6 +18,4 @@ func (h hardcodedAuth) GetRequestMetadata(ctx context.Context, uri ...string) (m
 
 func (hardcodedAuth) RequireTransportSecurity() bool { return false }
 
-func NewRpcCredentials() hardcodedAuth {
-	return hardcodedAuth{}
-}
+func NewRpcCredentials() hardcodedAuth { return hardcodedAuth{} }
