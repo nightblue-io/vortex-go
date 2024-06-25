@@ -175,6 +175,44 @@
         
           
           <li>
+            <a href="#types%2fcloudcreds.proto">types/cloudcreds.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#vortexproto.types.AWSInfo"><span class="badge">M</span>AWSInfo</a>
+                </li>
+              
+                <li>
+                  <a href="#vortexproto.types.GCPInfo"><span class="badge">M</span>GCPInfo</a>
+                </li>
+              
+                <li>
+                  <a href="#vortexproto.types.Location"><span class="badge">M</span>Location</a>
+                </li>
+              
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#types%2foperation.proto">types/operation.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#vortexproto.types.Operation"><span class="badge">M</span>Operation</a>
+                </li>
+              
+              
+              
+              
+            </ul>
+          </li>
+        
+          
+          <li>
             <a href="#iam%2fv1%2fiam.proto">iam/v1/iam.proto</a>
             <ul>
               
@@ -289,10 +327,6 @@
                 </li>
               
                 <li>
-                  <a href="#vortexproto.operations.v1.Operation"><span class="badge">M</span>Operation</a>
-                </li>
-              
-                <li>
                   <a href="#vortexproto.operations.v1.WaitOperationRequest"><span class="badge">M</span>WaitOperationRequest</a>
                 </li>
               
@@ -310,6 +344,221 @@
       </ul>
     </div>
 
+    
+      
+      <div class="file-heading">
+        <h2 id="types/cloudcreds.proto">types/cloudcreds.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="vortexproto.types.AWSInfo">AWSInfo</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>role_arn</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Prioritized over id/secret. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>client_id_arn</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>client_secret</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>location</td>
+                  <td><a href="#vortexproto.types.Location">Location</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="vortexproto.types.GCPInfo">GCPInfo</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>service_account</td>
+                  <td><a href="#bytes">bytes</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>location</td>
+                  <td><a href="#vortexproto.types.Location">Location</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="vortexproto.types.Location">Location</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>active_zone</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>If set, prioritize over active region. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>active_region</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Valid only when active zone is not set. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>passive_zone</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>If set, prioritize over passive region. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>passive_region</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Valid only when passive zone is not set. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
+    
+      
+      <div class="file-heading">
+        <h2 id="types/operation.proto">types/operation.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="vortexproto.types.Operation">Operation</h3>
+        <p>This resource represents a long-running operation that is the result of a</p><p>network API call.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>The server-assigned name, which is only unique within the same service that
+originally returns it. If you use the default HTTP mapping, the
+`name` should be a resource name ending with `operations/{unique_id}`. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>metadata</td>
+                  <td><a href="#google.protobuf.Any">google.protobuf.Any</a></td>
+                  <td></td>
+                  <td><p>Service-specific metadata associated with the operation.  It typically
+contains progress information and common metadata such as create time.
+Some services might not provide such metadata.  Any method that returns a
+long-running operation should document the metadata type, if any. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>done</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p>If the value is `false`, it means the operation is still in progress.
+If `true`, the operation is completed, and either `error` or `response` is
+available. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>error</td>
+                  <td><a href="#google.rpc.Status">google.rpc.Status</a></td>
+                  <td></td>
+                  <td><p>The error result of the operation in case of failure or cancellation. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>response</td>
+                  <td><a href="#google.protobuf.Any">google.protobuf.Any</a></td>
+                  <td></td>
+                  <td><p>The normal response of the operation in case of success.  If the original
+method returns no data on success, such as `Delete`, the response is
+`google.protobuf.Empty`.  If the original method is standard
+`Get`/`Create`/`Update`, the response should be the resource.  For other
+methods, the response should have the type `XxxResponse`, where `Xxx`
+is the original method name.  For example, if the original method name
+is `TakeSnapshot()`, the inferred response type is
+`TakeSnapshotResponse`. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+
+      
+
+      
+
+      
     
       
       <div class="file-heading">
@@ -649,7 +898,7 @@ MC_AUTO </p></td>
               
                 <tr>
                   <td>operation</td>
-                  <td><a href="#vortexproto.operations.v1.Operation">vortexproto.operations.v1.Operation</a></td>
+                  <td><a href="#vortexproto.types.Operation">vortexproto.types.Operation</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1097,7 +1346,7 @@ MC_AUTO </p></td>
               
                 <tr>
                   <td>operations</td>
-                  <td><a href="#vortexproto.operations.v1.Operation">Operation</a></td>
+                  <td><a href="#vortexproto.types.Operation">vortexproto.types.Operation</a></td>
                   <td>repeated</td>
                   <td><p> </p></td>
                 </tr>
@@ -1107,72 +1356,6 @@ MC_AUTO </p></td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="vortexproto.operations.v1.Operation">Operation</h3>
-        <p>This resource represents a long-running operation that is the result of a</p><p>network API call.</p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p>The server-assigned name, which is only unique within the same service that
-originally returns it. If you use the default HTTP mapping, the
-`name` should be a resource name ending with `operations/{unique_id}`. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>metadata</td>
-                  <td><a href="#google.protobuf.Any">google.protobuf.Any</a></td>
-                  <td></td>
-                  <td><p>Service-specific metadata associated with the operation.  It typically
-contains progress information and common metadata such as create time.
-Some services might not provide such metadata.  Any method that returns a
-long-running operation should document the metadata type, if any. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>done</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p>If the value is `false`, it means the operation is still in progress.
-If `true`, the operation is completed, and either `error` or `response` is
-available. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>error</td>
-                  <td><a href="#google.rpc.Status">google.rpc.Status</a></td>
-                  <td></td>
-                  <td><p>The error result of the operation in case of failure or cancellation. </p></td>
-                </tr>
-              
-                <tr>
-                  <td>response</td>
-                  <td><a href="#google.protobuf.Any">google.protobuf.Any</a></td>
-                  <td></td>
-                  <td><p>The normal response of the operation in case of success.  If the original
-method returns no data on success, such as `Delete`, the response is
-`google.protobuf.Empty`.  If the original method is standard
-`Get`/`Create`/`Update`, the response should be the resource.  For other
-methods, the response should have the type `XxxResponse`, where `Xxx`
-is the original method name.  For example, if the original method name
-is `TakeSnapshot()`, the inferred response type is
-`TakeSnapshotResponse`. </p></td>
                 </tr>
               
             </tbody>
@@ -1230,7 +1413,7 @@ is `TakeSnapshot()`, the inferred response type is
               <tr>
                 <td>GetOperation</td>
                 <td><a href="#vortexproto.operations.v1.GetOperationRequest">GetOperationRequest</a></td>
-                <td><a href="#vortexproto.operations.v1.Operation">Operation</a></td>
+                <td><a href="#vortexproto.types.Operation">.vortexproto.types.Operation</a></td>
                 <td><p>Get a long-running operation.</p></td>
               </tr>
             
@@ -1251,7 +1434,7 @@ is `TakeSnapshot()`, the inferred response type is
               <tr>
                 <td>WaitOperation</td>
                 <td><a href="#vortexproto.operations.v1.WaitOperationRequest">WaitOperationRequest</a></td>
-                <td><a href="#vortexproto.operations.v1.Operation">Operation</a></td>
+                <td><a href="#vortexproto.types.Operation">.vortexproto.types.Operation</a></td>
                 <td><p>Wait on a long-running operation.</p></td>
               </tr>
             

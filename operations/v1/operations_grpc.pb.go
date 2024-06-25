@@ -8,6 +8,7 @@ package operations
 
 import (
 	context "context"
+	types "github.com/vortex-io/vortexproto/types"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -36,13 +37,13 @@ type OperationsClient interface {
 	// List long-running operations.
 	ListOperations(ctx context.Context, in *ListOperationsRequest, opts ...grpc.CallOption) (*ListOperationsResponse, error)
 	// Get a long-running operation.
-	GetOperation(ctx context.Context, in *GetOperationRequest, opts ...grpc.CallOption) (*Operation, error)
+	GetOperation(ctx context.Context, in *GetOperationRequest, opts ...grpc.CallOption) (*types.Operation, error)
 	// Delete a long-running operation.
 	DeleteOperation(ctx context.Context, in *DeleteOperationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Cancel a long-running operation.
 	CancelOperation(ctx context.Context, in *CancelOperationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Wait on a long-running operation.
-	WaitOperation(ctx context.Context, in *WaitOperationRequest, opts ...grpc.CallOption) (*Operation, error)
+	WaitOperation(ctx context.Context, in *WaitOperationRequest, opts ...grpc.CallOption) (*types.Operation, error)
 }
 
 type operationsClient struct {
@@ -63,9 +64,9 @@ func (c *operationsClient) ListOperations(ctx context.Context, in *ListOperation
 	return out, nil
 }
 
-func (c *operationsClient) GetOperation(ctx context.Context, in *GetOperationRequest, opts ...grpc.CallOption) (*Operation, error) {
+func (c *operationsClient) GetOperation(ctx context.Context, in *GetOperationRequest, opts ...grpc.CallOption) (*types.Operation, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Operation)
+	out := new(types.Operation)
 	err := c.cc.Invoke(ctx, Operations_GetOperation_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -93,9 +94,9 @@ func (c *operationsClient) CancelOperation(ctx context.Context, in *CancelOperat
 	return out, nil
 }
 
-func (c *operationsClient) WaitOperation(ctx context.Context, in *WaitOperationRequest, opts ...grpc.CallOption) (*Operation, error) {
+func (c *operationsClient) WaitOperation(ctx context.Context, in *WaitOperationRequest, opts ...grpc.CallOption) (*types.Operation, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Operation)
+	out := new(types.Operation)
 	err := c.cc.Invoke(ctx, Operations_WaitOperation_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -112,13 +113,13 @@ type OperationsServer interface {
 	// List long-running operations.
 	ListOperations(context.Context, *ListOperationsRequest) (*ListOperationsResponse, error)
 	// Get a long-running operation.
-	GetOperation(context.Context, *GetOperationRequest) (*Operation, error)
+	GetOperation(context.Context, *GetOperationRequest) (*types.Operation, error)
 	// Delete a long-running operation.
 	DeleteOperation(context.Context, *DeleteOperationRequest) (*emptypb.Empty, error)
 	// Cancel a long-running operation.
 	CancelOperation(context.Context, *CancelOperationRequest) (*emptypb.Empty, error)
 	// Wait on a long-running operation.
-	WaitOperation(context.Context, *WaitOperationRequest) (*Operation, error)
+	WaitOperation(context.Context, *WaitOperationRequest) (*types.Operation, error)
 	mustEmbedUnimplementedOperationsServer()
 }
 
@@ -129,7 +130,7 @@ type UnimplementedOperationsServer struct {
 func (UnimplementedOperationsServer) ListOperations(context.Context, *ListOperationsRequest) (*ListOperationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOperations not implemented")
 }
-func (UnimplementedOperationsServer) GetOperation(context.Context, *GetOperationRequest) (*Operation, error) {
+func (UnimplementedOperationsServer) GetOperation(context.Context, *GetOperationRequest) (*types.Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOperation not implemented")
 }
 func (UnimplementedOperationsServer) DeleteOperation(context.Context, *DeleteOperationRequest) (*emptypb.Empty, error) {
@@ -138,7 +139,7 @@ func (UnimplementedOperationsServer) DeleteOperation(context.Context, *DeleteOpe
 func (UnimplementedOperationsServer) CancelOperation(context.Context, *CancelOperationRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelOperation not implemented")
 }
-func (UnimplementedOperationsServer) WaitOperation(context.Context, *WaitOperationRequest) (*Operation, error) {
+func (UnimplementedOperationsServer) WaitOperation(context.Context, *WaitOperationRequest) (*types.Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WaitOperation not implemented")
 }
 func (UnimplementedOperationsServer) mustEmbedUnimplementedOperationsServer() {}
