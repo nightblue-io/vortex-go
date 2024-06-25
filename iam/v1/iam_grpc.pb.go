@@ -19,7 +19,6 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Iam_SignUp_FullMethodName = "/vortexproto.iam.v1.Iam/SignUp"
 	Iam_Login_FullMethodName  = "/vortexproto.iam.v1.Iam/Login"
 	Iam_WhoAmI_FullMethodName = "/vortexproto.iam.v1.Iam/WhoAmI"
 )
@@ -30,8 +29,6 @@ const (
 //
 // Iam service definition.
 type IamClient interface {
-	// Create an account for the Vortex Platform.
-	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignUpResponse, error)
 	// Create an account for the Vortex Platform.
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (Iam_LoginClient, error)
 	// Testing endpoint.
@@ -44,16 +41,6 @@ type iamClient struct {
 
 func NewIamClient(cc grpc.ClientConnInterface) IamClient {
 	return &iamClient{cc}
-}
-
-func (c *iamClient) SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignUpResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SignUpResponse)
-	err := c.cc.Invoke(ctx, Iam_SignUp_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *iamClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (Iam_LoginClient, error) {
@@ -106,8 +93,6 @@ func (c *iamClient) WhoAmI(ctx context.Context, in *WhoAmIRequest, opts ...grpc.
 // Iam service definition.
 type IamServer interface {
 	// Create an account for the Vortex Platform.
-	SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error)
-	// Create an account for the Vortex Platform.
 	Login(*LoginRequest, Iam_LoginServer) error
 	// Testing endpoint.
 	WhoAmI(context.Context, *WhoAmIRequest) (*WhoAmIResponse, error)
@@ -118,9 +103,6 @@ type IamServer interface {
 type UnimplementedIamServer struct {
 }
 
-func (UnimplementedIamServer) SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
-}
 func (UnimplementedIamServer) Login(*LoginRequest, Iam_LoginServer) error {
 	return status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
@@ -138,24 +120,6 @@ type UnsafeIamServer interface {
 
 func RegisterIamServer(s grpc.ServiceRegistrar, srv IamServer) {
 	s.RegisterService(&Iam_ServiceDesc, srv)
-}
-
-func _Iam_SignUp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SignUpRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(IamServer).SignUp(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Iam_SignUp_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IamServer).SignUp(ctx, req.(*SignUpRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Iam_Login_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -204,10 +168,6 @@ var Iam_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "vortexproto.iam.v1.Iam",
 	HandlerType: (*IamServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "SignUp",
-			Handler:    _Iam_SignUp_Handler,
-		},
 		{
 			MethodName: "WhoAmI",
 			Handler:    _Iam_WhoAmI_Handler,

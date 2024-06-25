@@ -19,7 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Vortex_Do_FullMethodName = "/vortexproto.vortex.v1.Vortex/Do"
+	Vortex_CreateEnvironment_FullMethodName = "/vortexproto.vortex.v1.Vortex/CreateEnvironment"
+	Vortex_GetEnvironment_FullMethodName    = "/vortexproto.vortex.v1.Vortex/GetEnvironment"
+	Vortex_ListEnvironments_FullMethodName  = "/vortexproto.vortex.v1.Vortex/ListEnvironments"
+	Vortex_DeleteEnvironment_FullMethodName = "/vortexproto.vortex.v1.Vortex/DeleteEnvironment"
+	Vortex_Do_FullMethodName                = "/vortexproto.vortex.v1.Vortex/Do"
 )
 
 // VortexClient is the client API for Vortex service.
@@ -28,6 +32,14 @@ const (
 //
 // Vortex service definition.
 type VortexClient interface {
+	// Create a deployment environment.
+	CreateEnvironment(ctx context.Context, in *CreateEnvironmentRequest, opts ...grpc.CallOption) (*CreateEnvironmentResponse, error)
+	// Describe a deployment environment.
+	GetEnvironment(ctx context.Context, in *GetEnvironmentRequest, opts ...grpc.CallOption) (*GetEnvironmentResponse, error)
+	// List deployment environments.
+	ListEnvironments(ctx context.Context, in *ListEnvironmentsRequest, opts ...grpc.CallOption) (*ListEnvironmentsResponse, error)
+	// Delete a deployment environment.
+	DeleteEnvironment(ctx context.Context, in *DeleteEnvironmentRequest, opts ...grpc.CallOption) (*DeleteEnvironmentResponse, error)
 	// Testing endpoint.
 	Do(ctx context.Context, in *DoRequest, opts ...grpc.CallOption) (*DoResponse, error)
 }
@@ -38,6 +50,46 @@ type vortexClient struct {
 
 func NewVortexClient(cc grpc.ClientConnInterface) VortexClient {
 	return &vortexClient{cc}
+}
+
+func (c *vortexClient) CreateEnvironment(ctx context.Context, in *CreateEnvironmentRequest, opts ...grpc.CallOption) (*CreateEnvironmentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateEnvironmentResponse)
+	err := c.cc.Invoke(ctx, Vortex_CreateEnvironment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vortexClient) GetEnvironment(ctx context.Context, in *GetEnvironmentRequest, opts ...grpc.CallOption) (*GetEnvironmentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetEnvironmentResponse)
+	err := c.cc.Invoke(ctx, Vortex_GetEnvironment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vortexClient) ListEnvironments(ctx context.Context, in *ListEnvironmentsRequest, opts ...grpc.CallOption) (*ListEnvironmentsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListEnvironmentsResponse)
+	err := c.cc.Invoke(ctx, Vortex_ListEnvironments_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vortexClient) DeleteEnvironment(ctx context.Context, in *DeleteEnvironmentRequest, opts ...grpc.CallOption) (*DeleteEnvironmentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteEnvironmentResponse)
+	err := c.cc.Invoke(ctx, Vortex_DeleteEnvironment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *vortexClient) Do(ctx context.Context, in *DoRequest, opts ...grpc.CallOption) (*DoResponse, error) {
@@ -56,6 +108,14 @@ func (c *vortexClient) Do(ctx context.Context, in *DoRequest, opts ...grpc.CallO
 //
 // Vortex service definition.
 type VortexServer interface {
+	// Create a deployment environment.
+	CreateEnvironment(context.Context, *CreateEnvironmentRequest) (*CreateEnvironmentResponse, error)
+	// Describe a deployment environment.
+	GetEnvironment(context.Context, *GetEnvironmentRequest) (*GetEnvironmentResponse, error)
+	// List deployment environments.
+	ListEnvironments(context.Context, *ListEnvironmentsRequest) (*ListEnvironmentsResponse, error)
+	// Delete a deployment environment.
+	DeleteEnvironment(context.Context, *DeleteEnvironmentRequest) (*DeleteEnvironmentResponse, error)
 	// Testing endpoint.
 	Do(context.Context, *DoRequest) (*DoResponse, error)
 	mustEmbedUnimplementedVortexServer()
@@ -65,6 +125,18 @@ type VortexServer interface {
 type UnimplementedVortexServer struct {
 }
 
+func (UnimplementedVortexServer) CreateEnvironment(context.Context, *CreateEnvironmentRequest) (*CreateEnvironmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateEnvironment not implemented")
+}
+func (UnimplementedVortexServer) GetEnvironment(context.Context, *GetEnvironmentRequest) (*GetEnvironmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEnvironment not implemented")
+}
+func (UnimplementedVortexServer) ListEnvironments(context.Context, *ListEnvironmentsRequest) (*ListEnvironmentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListEnvironments not implemented")
+}
+func (UnimplementedVortexServer) DeleteEnvironment(context.Context, *DeleteEnvironmentRequest) (*DeleteEnvironmentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteEnvironment not implemented")
+}
 func (UnimplementedVortexServer) Do(context.Context, *DoRequest) (*DoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Do not implemented")
 }
@@ -79,6 +151,78 @@ type UnsafeVortexServer interface {
 
 func RegisterVortexServer(s grpc.ServiceRegistrar, srv VortexServer) {
 	s.RegisterService(&Vortex_ServiceDesc, srv)
+}
+
+func _Vortex_CreateEnvironment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateEnvironmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VortexServer).CreateEnvironment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vortex_CreateEnvironment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VortexServer).CreateEnvironment(ctx, req.(*CreateEnvironmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vortex_GetEnvironment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetEnvironmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VortexServer).GetEnvironment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vortex_GetEnvironment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VortexServer).GetEnvironment(ctx, req.(*GetEnvironmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vortex_ListEnvironments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEnvironmentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VortexServer).ListEnvironments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vortex_ListEnvironments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VortexServer).ListEnvironments(ctx, req.(*ListEnvironmentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vortex_DeleteEnvironment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteEnvironmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VortexServer).DeleteEnvironment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vortex_DeleteEnvironment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VortexServer).DeleteEnvironment(ctx, req.(*DeleteEnvironmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Vortex_Do_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -106,6 +250,22 @@ var Vortex_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "vortexproto.vortex.v1.Vortex",
 	HandlerType: (*VortexServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateEnvironment",
+			Handler:    _Vortex_CreateEnvironment_Handler,
+		},
+		{
+			MethodName: "GetEnvironment",
+			Handler:    _Vortex_GetEnvironment_Handler,
+		},
+		{
+			MethodName: "ListEnvironments",
+			Handler:    _Vortex_ListEnvironments_Handler,
+		},
+		{
+			MethodName: "DeleteEnvironment",
+			Handler:    _Vortex_DeleteEnvironment_Handler,
+		},
 		{
 			MethodName: "Do",
 			Handler:    _Vortex_Do_Handler,
