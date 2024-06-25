@@ -33,7 +33,7 @@ type IamClient interface {
 	// Create an account for the Vortex Platform.
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*SignUpResponse, error)
 	// Create an account for the Vortex Platform.
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (Iam_LoginClient, error)
 	// Testing endpoint.
 	WhoAmI(ctx context.Context, in *WhoAmIRequest, opts ...grpc.CallOption) (*WhoAmIResponse, error)
 }
@@ -56,14 +56,37 @@ func (c *iamClient) SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.
 	return out, nil
 }
 
-func (c *iamClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+func (c *iamClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (Iam_LoginClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LoginResponse)
-	err := c.cc.Invoke(ctx, Iam_Login_FullMethodName, in, out, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &Iam_ServiceDesc.Streams[0], Iam_Login_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &iamLoginClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Iam_LoginClient interface {
+	Recv() (*LoginResponse, error)
+	grpc.ClientStream
+}
+
+type iamLoginClient struct {
+	grpc.ClientStream
+}
+
+func (x *iamLoginClient) Recv() (*LoginResponse, error) {
+	m := new(LoginResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *iamClient) WhoAmI(ctx context.Context, in *WhoAmIRequest, opts ...grpc.CallOption) (*WhoAmIResponse, error) {
@@ -85,7 +108,7 @@ type IamServer interface {
 	// Create an account for the Vortex Platform.
 	SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error)
 	// Create an account for the Vortex Platform.
-	Login(context.Context, *LoginRequest) (*LoginResponse, error)
+	Login(*LoginRequest, Iam_LoginServer) error
 	// Testing endpoint.
 	WhoAmI(context.Context, *WhoAmIRequest) (*WhoAmIResponse, error)
 	mustEmbedUnimplementedIamServer()
@@ -98,8 +121,8 @@ type UnimplementedIamServer struct {
 func (UnimplementedIamServer) SignUp(context.Context, *SignUpRequest) (*SignUpResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
 }
-func (UnimplementedIamServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+func (UnimplementedIamServer) Login(*LoginRequest, Iam_LoginServer) error {
+	return status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
 func (UnimplementedIamServer) WhoAmI(context.Context, *WhoAmIRequest) (*WhoAmIResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WhoAmI not implemented")
@@ -135,22 +158,25 @@ func _Iam_SignUp_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Iam_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LoginRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+func _Iam_Login_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(LoginRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(IamServer).Login(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Iam_Login_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IamServer).Login(ctx, req.(*LoginRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(IamServer).Login(m, &iamLoginServer{ServerStream: stream})
+}
+
+type Iam_LoginServer interface {
+	Send(*LoginResponse) error
+	grpc.ServerStream
+}
+
+type iamLoginServer struct {
+	grpc.ServerStream
+}
+
+func (x *iamLoginServer) Send(m *LoginResponse) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _Iam_WhoAmI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -183,14 +209,16 @@ var Iam_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Iam_SignUp_Handler,
 		},
 		{
-			MethodName: "Login",
-			Handler:    _Iam_Login_Handler,
-		},
-		{
 			MethodName: "WhoAmI",
 			Handler:    _Iam_WhoAmI_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Login",
+			Handler:       _Iam_Login_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "iam/v1/iam.proto",
 }

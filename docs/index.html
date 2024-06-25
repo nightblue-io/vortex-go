@@ -187,6 +187,10 @@
                 </li>
               
                 <li>
+                  <a href="#vortexproto.iam.v1.LoginResponse.DeviceAuth"><span class="badge">M</span>LoginResponse.DeviceAuth</a>
+                </li>
+              
+                <li>
                   <a href="#vortexproto.iam.v1.SignUpRequest"><span class="badge">M</span>SignUpRequest</a>
                 </li>
               
@@ -258,6 +262,13 @@
             <tbody>
               
                 <tr>
+                  <td>access_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional. If set, use to call user profile. </p></td>
+                </tr>
+              
+                <tr>
                   <td>id</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
@@ -269,6 +280,13 @@
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>device_auth</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Optional. If non-empty, do a device auth flow. </p></td>
                 </tr>
               
             </tbody>
@@ -289,7 +307,52 @@
             <tbody>
               
                 <tr>
-                  <td>token</td>
+                  <td>device_auth</td>
+                  <td><a href="#vortexproto.iam.v1.LoginResponse.DeviceAuth">LoginResponse.DeviceAuth</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>access_token</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>status</td>
+                  <td><a href="#google.rpc.Status">google.rpc.Status</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="vortexproto.iam.v1.LoginResponse.DeviceAuth">LoginResponse.DeviceAuth</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>user_code</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>verification_uri_complete</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -454,7 +517,7 @@
               <tr>
                 <td>Login</td>
                 <td><a href="#vortexproto.iam.v1.LoginRequest">LoginRequest</a></td>
-                <td><a href="#vortexproto.iam.v1.LoginResponse">LoginResponse</a></td>
+                <td><a href="#vortexproto.iam.v1.LoginResponse">LoginResponse</a> stream</td>
                 <td><p>Create an account for the Vortex Platform.</p></td>
               </tr>
             
@@ -488,7 +551,7 @@
               <tr>
                 <td>SignUp</td>
                 <td>POST</td>
-                <td>/vortex/iam/v0/signup</td>
+                <td>/vortex/iam/v1/signup</td>
                 <td>*</td>
               </tr>
               
@@ -498,7 +561,7 @@
               <tr>
                 <td>Login</td>
                 <td>POST</td>
-                <td>/vortex/iam/v0/login</td>
+                <td>/vortex/iam/v1/login</td>
                 <td>*</td>
               </tr>
               
@@ -508,7 +571,7 @@
               <tr>
                 <td>WhoAmI</td>
                 <td>GET</td>
-                <td>/vortex/iam/v0/whoami</td>
+                <td>/vortex/iam/v1/whoami</td>
                 <td></td>
               </tr>
               
