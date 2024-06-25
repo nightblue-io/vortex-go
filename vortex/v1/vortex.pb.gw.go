@@ -31,20 +31,28 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_Vortex_GetInfo_0(ctx context.Context, marshaler runtime.Marshaler, client VortexClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetInfoRequest
+func request_Vortex_Do_0(ctx context.Context, marshaler runtime.Marshaler, client VortexClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DoRequest
 	var metadata runtime.ServerMetadata
 
-	msg, err := client.GetInfo(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.Do(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_Vortex_GetInfo_0(ctx context.Context, marshaler runtime.Marshaler, server VortexServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetInfoRequest
+func local_request_Vortex_Do_0(ctx context.Context, marshaler runtime.Marshaler, server VortexServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DoRequest
 	var metadata runtime.ServerMetadata
 
-	msg, err := server.GetInfo(ctx, &protoReq)
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.Do(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -55,7 +63,7 @@ func local_request_Vortex_GetInfo_0(ctx context.Context, marshaler runtime.Marsh
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterVortexHandlerFromEndpoint instead.
 func RegisterVortexHandlerServer(ctx context.Context, mux *runtime.ServeMux, server VortexServer) error {
 
-	mux.Handle("GET", pattern_Vortex_GetInfo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Vortex_Do_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -63,12 +71,12 @@ func RegisterVortexHandlerServer(ctx context.Context, mux *runtime.ServeMux, ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/vortexproto.vortex.v1.Vortex/GetInfo", runtime.WithHTTPPathPattern("/vortex/v0/info"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/vortexproto.vortex.v1.Vortex/Do", runtime.WithHTTPPathPattern("/vortex/v1:do"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Vortex_GetInfo_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Vortex_Do_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -76,7 +84,7 @@ func RegisterVortexHandlerServer(ctx context.Context, mux *runtime.ServeMux, ser
 			return
 		}
 
-		forward_Vortex_GetInfo_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Vortex_Do_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -121,25 +129,25 @@ func RegisterVortexHandler(ctx context.Context, mux *runtime.ServeMux, conn *grp
 // "VortexClient" to call the correct interceptors.
 func RegisterVortexHandlerClient(ctx context.Context, mux *runtime.ServeMux, client VortexClient) error {
 
-	mux.Handle("GET", pattern_Vortex_GetInfo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Vortex_Do_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/vortexproto.vortex.v1.Vortex/GetInfo", runtime.WithHTTPPathPattern("/vortex/v0/info"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/vortexproto.vortex.v1.Vortex/Do", runtime.WithHTTPPathPattern("/vortex/v1:do"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Vortex_GetInfo_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Vortex_Do_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Vortex_GetInfo_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Vortex_Do_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -147,9 +155,9 @@ func RegisterVortexHandlerClient(ctx context.Context, mux *runtime.ServeMux, cli
 }
 
 var (
-	pattern_Vortex_GetInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"vortex", "v0", "info"}, ""))
+	pattern_Vortex_Do_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"vortex", "v1"}, "do"))
 )
 
 var (
-	forward_Vortex_GetInfo_0 = runtime.ForwardResponseMessage
+	forward_Vortex_Do_0 = runtime.ForwardResponseMessage
 )

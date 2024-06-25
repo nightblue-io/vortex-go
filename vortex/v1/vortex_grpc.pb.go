@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Vortex_GetInfo_FullMethodName = "/vortexproto.vortex.v1.Vortex/GetInfo"
+	Vortex_Do_FullMethodName = "/vortexproto.vortex.v1.Vortex/Do"
 )
 
 // VortexClient is the client API for Vortex service.
@@ -29,7 +29,7 @@ const (
 // Vortex service definition.
 type VortexClient interface {
 	// Testing endpoint.
-	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
+	Do(ctx context.Context, in *DoRequest, opts ...grpc.CallOption) (*DoResponse, error)
 }
 
 type vortexClient struct {
@@ -40,10 +40,10 @@ func NewVortexClient(cc grpc.ClientConnInterface) VortexClient {
 	return &vortexClient{cc}
 }
 
-func (c *vortexClient) GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error) {
+func (c *vortexClient) Do(ctx context.Context, in *DoRequest, opts ...grpc.CallOption) (*DoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetInfoResponse)
-	err := c.cc.Invoke(ctx, Vortex_GetInfo_FullMethodName, in, out, cOpts...)
+	out := new(DoResponse)
+	err := c.cc.Invoke(ctx, Vortex_Do_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (c *vortexClient) GetInfo(ctx context.Context, in *GetInfoRequest, opts ...
 // Vortex service definition.
 type VortexServer interface {
 	// Testing endpoint.
-	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
+	Do(context.Context, *DoRequest) (*DoResponse, error)
 	mustEmbedUnimplementedVortexServer()
 }
 
@@ -65,8 +65,8 @@ type VortexServer interface {
 type UnimplementedVortexServer struct {
 }
 
-func (UnimplementedVortexServer) GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetInfo not implemented")
+func (UnimplementedVortexServer) Do(context.Context, *DoRequest) (*DoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Do not implemented")
 }
 func (UnimplementedVortexServer) mustEmbedUnimplementedVortexServer() {}
 
@@ -81,20 +81,20 @@ func RegisterVortexServer(s grpc.ServiceRegistrar, srv VortexServer) {
 	s.RegisterService(&Vortex_ServiceDesc, srv)
 }
 
-func _Vortex_GetInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetInfoRequest)
+func _Vortex_Do_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VortexServer).GetInfo(ctx, in)
+		return srv.(VortexServer).Do(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Vortex_GetInfo_FullMethodName,
+		FullMethod: Vortex_Do_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VortexServer).GetInfo(ctx, req.(*GetInfoRequest))
+		return srv.(VortexServer).Do(ctx, req.(*DoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -107,8 +107,8 @@ var Vortex_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*VortexServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetInfo",
-			Handler:    _Vortex_GetInfo_Handler,
+			MethodName: "Do",
+			Handler:    _Vortex_Do_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

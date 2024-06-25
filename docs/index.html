@@ -222,11 +222,11 @@
             <ul>
               
                 <li>
-                  <a href="#vortexproto.vortex.v1.GetInfoRequest"><span class="badge">M</span>GetInfoRequest</a>
+                  <a href="#vortexproto.vortex.v1.DoRequest"><span class="badge">M</span>DoRequest</a>
                 </li>
               
                 <li>
-                  <a href="#vortexproto.vortex.v1.GetInfoResponse"><span class="badge">M</span>GetInfoResponse</a>
+                  <a href="#vortexproto.vortex.v1.DoResponse"><span class="badge">M</span>DoResponse</a>
                 </li>
               
               
@@ -595,15 +595,8 @@
       <p></p>
 
       
-        <h3 id="vortexproto.vortex.v1.GetInfoRequest">GetInfoRequest</h3>
-        <p>Request message for the GetInfo rpc.</p>
-
-        
-
-        
-      
-        <h3 id="vortexproto.vortex.v1.GetInfoResponse">GetInfoResponse</h3>
-        <p>Request message for the GetInfo rpc.</p>
+        <h3 id="vortexproto.vortex.v1.DoRequest">DoRequest</h3>
+        <p>Request message for the Do rpc.</p>
 
         
           <table class="field-table">
@@ -613,7 +606,31 @@
             <tbody>
               
                 <tr>
-                  <td>info</td>
+                  <td>data</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="vortexproto.vortex.v1.DoResponse">DoResponse</h3>
+        <p>Request message for the Do rpc.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>data</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
@@ -641,9 +658,9 @@
           <tbody>
             
               <tr>
-                <td>GetInfo</td>
-                <td><a href="#vortexproto.vortex.v1.GetInfoRequest">GetInfoRequest</a></td>
-                <td><a href="#vortexproto.vortex.v1.GetInfoResponse">GetInfoResponse</a></td>
+                <td>Do</td>
+                <td><a href="#vortexproto.vortex.v1.DoRequest">DoRequest</a></td>
+                <td><a href="#vortexproto.vortex.v1.DoResponse">DoResponse</a></td>
                 <td><p>Testing endpoint.</p></td>
               </tr>
             
@@ -668,10 +685,10 @@
               
               
               <tr>
-                <td>GetInfo</td>
-                <td>GET</td>
-                <td>/vortex/v0/info</td>
-                <td></td>
+                <td>Do</td>
+                <td>POST</td>
+                <td>/vortex/v1:do</td>
+                <td>*</td>
               </tr>
               
             
