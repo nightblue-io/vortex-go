@@ -8,7 +8,7 @@ package operations
 
 import (
 	context "context"
-	types "github.com/vortex-io/vortex-go/types"
+	types "github.com/nightblue-io/vortex-go/types"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
